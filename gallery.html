@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background: #0e0b2a;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 20px 0 40px;
+            color: #fcfafa;
+        }
+        
+        /* Gallery Container */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+        
+        /* Gallery Items */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            aspect-ratio: 4/3; /* Consistent aspect ratio */
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.08);
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            font-size: 1.1rem;
+        }
+        
+        .gallery-item:hover .image-caption {
+            transform: translateY(0);
+        }
+        
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: calc(90vh - 60px);
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .caption-text {
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            max-width: 80%;
+        }
+        .footer{
+            margin-top: 20px;
+        }
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            
+            .image-caption {
+                padding: 15px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            
+            .gallery-item {
+                border-radius: 8px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .lightbox-image {
+                max-height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+      <!-- Calendly badge widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<script type="text/javascript">window.onload = function() { Calendly.initBadgeWidget({ url: 'https://calendly.com/brianwasike504', text: 'Schedule time with me', color: '#0069ff', textColor: '#ffffff', branding: true }); }</script>
+<!-- Calendly badge widget end -->
+    <h1>My Image Gallery</h1>
+    
+    <div class="gallery-container">
+        <div class="gallery">
+            <!-- Gallery Items 1-8 -->
+            <div class="gallery-item" onclick="openLightbox('Alpha.jpg', 'Alpha State Logo 3d on wall')">
+                <img src="Alpha.jpg" alt="Alpha State Logo" class="gallery-image" loading="lazy">
+                <div class="image-caption">Alpha State Logo</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('alpha2.jpg', 'Alpha state building')">
+                <img src="alpha2.jpg" alt="Alpha State building" class="gallery-image" loading="lazy">
+                <div class="image-caption">Alpha State building</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('alpha3.jpg', 'Alpha state logo on a blue cloth')">
+                <img src="alpha3.jpg" alt="Alpha state logo on a blue cloth" class="gallery-image" loading="lazy">
+                <div class="image-caption">Alpha State blue cap</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('alpha4.jpg', 'Alpha state logo on a desk')">
+                <img src="alpha4.jpg" alt="Alpha state logo on a desk" class="gallery-image" loading="lazy">
+                <div class="image-caption">Alpha state desk</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('alpha5.jpg', 'Alpha state logo variations')">
+                <img src="alpha5.jpg" alt="Alpha state logo variations" class="gallery-image" loading="lazy">
+                <div class="image-caption">Alpha state logo variations</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('ocean1.jpg', 'Ocean State Glass Effect')">
+                <img src="ocean1.jpg" alt="Ocean State Glass Effect" class="gallery-image" loading="lazy">
+                <div class="image-caption">Ocean State</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('Oceans state@2x.png', 'Ocean State Logo')">
+                <img src="Oceans state@2x.png" alt="Ocean State Logo" class="gallery-image" loading="lazy">
+                <div class="image-caption">Ocean State</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('saint trader.jpg', 'Saint Trader Logo')">
+                <img src="saint trader.jpg" alt="Saint Trader Logo" class="gallery-image" loading="lazy">
+                <div class="image-caption">Saint Trader</div>
+            </div>
+            
+            <!-- Additional Items 9-11 -->
+            <div class="gallery-item" onclick="openLightbox('afya mento.jpg', 'Alpha Mento Logo')">
+                <img src="afya mento.jpg" alt="Afya mento logo" class="gallery-image" loading="lazy">
+                <div class="image-caption">Afya Mento</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('ocean2.png', 'Ocean State Variation')">
+                <img src="ocean2.png" alt="Ocean Variation" class="gallery-image" loading="lazy">
+                <div class="image-caption">Ocean Variation</div>
+            </div>
+            
+            <div class="gallery-item" onclick="openLightbox('Vobiks-01.png', 'Vobiks Logo')">
+                <img src="Vobiks-01.png" alt="vobiks logo" class="gallery-image" loading="lazy">
+                <div class="image-caption">Vobiks Logo</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-image" class="lightbox-image" src="" alt="">
+            <div id="lightbox-caption" class="caption-text"></div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Left Side: Branding -->
+            <div class="footer-brand">
+                <h2>Gideon Barno</h2>
+                <p>Frontend Developer & Graphic Designer</p>
+            </div>
+    
+            <!-- Middle: Quick Links -->
+            <ul class="footer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">About</a></li>
+                <li><a href="index.html">Skills</a></li>
+                <li><a href="index.html">Projects</a></li>
+                <li><a href="index.html">Contact</a></li>
+            </ul>
+    
+            <!-- Right Side: Social Media -->
+            <div class="footer-social">
+                <a href="https://www.behance.net/gideonkigen1" target="_blank"><i class="fab fa-behance"></i></a>
+                <a href="https://www.linkedin.com/in/Gideon Barno" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/me/" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/254799230451" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    
+        <!-- Copyright Notice -->
+        <p class="footer-copy">© 2025 Gideon Kiprotich. All Rights Reserved.</p>
+    </footer>
+    <script>
+        // Lightbox functionality
+        function openLightbox(imageSrc, caption) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            
+            lightbox.style.display = 'flex';
+            lightboxImage.src = imageSrc;
+            lightboxCaption.textContent = caption;
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close lightbox when clicking outside the image
+        document.addEventListener('click', function(event) {
+            const lightbox = document.getElementById('lightbox');
+            if (event.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Close with ESC key
+        document.addEventListener('keydown', function(evt) {
+            if (evt.key === "Escape") {
+                closeLightbox();
+            }
+        });
+    </script>
+    
+</body>
+</html>
